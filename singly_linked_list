@@ -1,0 +1,102 @@
+class Node {
+    String data;
+    Node next;
+
+    Node(String data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+public class LinkedListDemo {
+    Node head;
+
+    void insertAtEnd(String data) {
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+            return;
+        }
+        Node temp = head;
+        while (temp.next != null) {
+            temp = temp.next;
+        }
+        temp.next = newNode;
+    }
+
+    void insertAtBeginning(String data) {
+        Node newNode = new Node(data);
+        newNode.next = head;
+        head = newNode;
+    }
+
+    void insertAtPosition(String data, int position) {
+        if (position <= 1) {
+            insertAtBeginning(data);
+            return;
+        }
+
+        Node newNode = new Node(data);
+        Node temp = head;
+
+        for (int i = 1; i < position - 1 && temp != null; i++) {
+            temp = temp.next;
+        }
+
+        if (temp == null) {
+            System.out.println("Position out of bounds. Inserting at end.");
+            insertAtEnd(data);
+            return;
+        }
+
+        newNode.next = temp.next;
+        temp.next = newNode;
+    }
+
+    void displayList() {
+        if (head == null) {
+            System.out.println("List is empty.");
+            return;
+        }
+
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.data + " -> ");
+            temp = temp.next;
+        }
+        System.out.println("NULL");
+    }
+
+    void deleteList() {
+        head = null;
+    }
+
+    public static void main(String[] args) {
+        LinkedListDemo list = new LinkedListDemo();
+
+        list.insertAtEnd("coffee");
+        list.insertAtEnd("chocolate");
+        list.insertAtEnd("biscuit");
+        list.insertAtEnd("brownie");
+        list.insertAtEnd("ice cream");
+
+        System.out.println("Initial List:");
+        list.displayList();
+
+        list.insertAtBeginning("cake");
+        System.out.println("\nAfter inserting 'cake' at beginning:");
+        list.displayList();
+
+        list.insertAtEnd("chicken rice");
+        System.out.println("\nAfter inserting 'chicken rice' at end:");
+        list.displayList();
+
+        list.insertAtPosition("curd rice", 4);
+        System.out.println("\nAfter inserting 'curd rice' at position 4:");
+        list.displayList();
+
+        list.deleteList();
+        System.out.println("\nAfter deleting the list:");
+        list.displayList();
+    }
+}
